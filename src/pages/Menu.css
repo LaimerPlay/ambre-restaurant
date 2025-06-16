@@ -1,0 +1,250 @@
+.menu-page {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* === Заголовок === */
+.menu-page h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 28px;
+  color: #333;
+}
+
+/* === Фильтр по тегам === */
+.category-section {
+  margin-bottom: 40px;
+}
+
+.category-section h2 {
+  font-size: 20px;
+  color: var(--amber-color);
+  margin-bottom: 16px;
+}
+
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tag-button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #eee;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tag-button:hover {
+  background-color: #ddd;
+}
+
+.tag-button.active {
+  background-color: #ff9f43;
+  color: white;
+  font-weight: bold;
+}
+
+/* === Сетка блюд === */
+.dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* === Карточка блюда === */
+.dish-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 15px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.dish-card:hover {
+  transform: scale(1.02);
+}
+
+.dish-card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.dish-card h3 {
+  font-size: 18px;
+  margin: 0 0 10px 0;
+}
+
+.dish-card p {
+  font-size: 14px;
+  margin: 0;
+  color: #555;
+}
+
+.price {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+  font-size: 20px; /* Увеличили цену */
+}
+
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #aaa;
+  margin-top: 20px;
+}
+
+/* === Модальное окно === */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.modal-description {
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 16px;
+}
+
+.modal-category-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.modal-category {
+  font-size: 14px;
+  color: #ff9f43;
+  font-weight: bold;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-chip {
+  background-color: #ff9f43;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quantity-control label {
+  font-size: 14px;
+  color: #333;
+}
+
+.quantity-control input {
+  width: 60px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.modal-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-weight {
+  font-size: 13px;
+  color: #888;
+}
+
+.add-to-cart-btn {
+  background-color: #ff9f43;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #e67c00;
+}

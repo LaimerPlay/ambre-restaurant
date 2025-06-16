@@ -1,0 +1,61 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .auth-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .forgot-password {
+    display: block;
+    text-align: center;
+    color: var(--amber-color);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .submit-button,
+  .telegram-button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button {
+    background-color: var(--amber-color);
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .submit-button:hover {
+    background-color: #e67c00;
+  }
+  
+  .telegram-button {
+    background-color: #eaf5ff;
+    color: var(--primary-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .privacy-policy {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+  }

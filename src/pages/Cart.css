@@ -1,0 +1,160 @@
+.cart {
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.cart h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Макет с двумя столбцами */
+.cart-layout {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Левый столбец: товары */
+.cart-items {
+  flex: 2;
+  min-width: 300px;
+}
+
+/* Элемент корзины */
+.cart-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.cart-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-control button {
+  background-color: #ff9f43;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Правый столбец: детали заказа */
+.order-summary {
+  flex: 1;
+  min-width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delivery-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: 2px solid #ff9f43;
+  background-color: #fff;
+  color: #ff9f43;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+  background-color: #ff9f43;
+  color: white;
+}
+
+.address-input input,
+.payment-method label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.address-input input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.pickup-addresses .address-option {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.pickup-addresses .address-option input[type="radio"] {
+  margin-right: 8px;
+}
+
+.payment-method {
+  margin-top: 20px;
+}
+
+.summary-details {
+  margin-top: 20px;
+}
+
+.detail-row,
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.total-row {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.checkout-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: #218838;
+}

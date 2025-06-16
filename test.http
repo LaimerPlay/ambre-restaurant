@@ -1,0 +1,10 @@
+POST http://localhost:5000/api/dishes
+Content-Type: application/json
+
+{
+  "name": "Борщ",
+  "price": 350,
+  "description": "Классический украинский борщ",
+  "image": "https://placehold.co/400x250/eceff1/333?text=Борщ",
+  "tags": ["Закуски", "Супы"]
+}

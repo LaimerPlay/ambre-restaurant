@@ -1,0 +1,72 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: var(--text-color);
+  }
+  
+  .auth-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .auth-form label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .auth-form label input[type="checkbox"] {
+    width: auto;
+  }
+  
+  .submit-button,
+  .telegram-button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button {
+    background-color: var(--amber-color);
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .submit-button:hover {
+    background-color: #e67c00;
+  }
+  
+  .telegram-button {
+    background-color: #eaf5ff;
+    color: var(--primary-color);
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .telegram-button span[role="img"] {
+    font-size: 20px;
+  }
+  
+  .privacy-policy {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 20px;
+  }

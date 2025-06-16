@@ -1,0 +1,147 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center; /* Центрируем по вертикали */
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.restaurant-name {
+  font-family: 'Brush Script MT', cursive, sans-serif; /* Элегантный курсивный шрифт */
+  font-size: 50px;
+  font-style: italic;
+  color: var(--amber-color);
+  margin-left: -10px;
+}
+
+.search {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px;
+}
+
+.search input {
+  width: 100%;
+  max-width: 800px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  height: 36px;
+}
+
+.search button {
+  background-color: var(--amber-color);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: -5px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #666;
+}
+
+.info-text p {
+  font-size: 12px;
+  margin: 0;
+  color: #666;
+}
+
+.info-text strong {
+  font-size: 16px;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--amber-color);
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #e67c00;
+}
+
+.cart-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: var(--amber-color);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.cart-button:hover {
+  transform: scale(1.1);
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--amber-color);
+  border-radius: 50%;
+  padding: 5px;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.icon-wrapper:hover {
+  transform: scale(1.1);
+}
