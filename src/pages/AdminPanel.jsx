@@ -20,7 +20,8 @@ function AdminPanel() {
     weight: '',
     description: '',
     mainCategory: '',
-    tags: []
+    tags: [],
+    image: ''
   };
 
   const updateOrderStatus = async (orderId, newStatus) => {
@@ -30,9 +31,9 @@ function AdminPanel() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
       });
-  
+
       if (!response.ok) throw new Error('Не удалось обновить статус');
-  
+
       const updatedOrder = await response.json();
       setOrders(orders.map(order =>
         order._id === orderId ? updatedOrder : order
@@ -75,7 +76,7 @@ function AdminPanel() {
     }
   }, [activeTab]);
 
-  // Фильтрация блюд по названию и категории
+  // Фильтрация блюд
   const filteredDishes = dishes.filter(dish => {
     const matchesSearch = filters.searchTerm
       ? dish.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
@@ -115,30 +116,79 @@ function AdminPanel() {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const maxSizeInBytes = 15 * 1024 * 1024; // 15 MB
+  
+    if (!file) return;
+  
+    if (file.size > maxSizeInBytes) {
+      alert('Файл слишком большой! Максимальный размер — 15 МБ.');
+      return;
+    }
+  
+    setForm({ ...form, image: file }); // сохраняем объект File
+  };
+
   const handleSave = async () => {
+    const formData = new FormData();
+  
+    // Добавляем поля формы
+    Object.keys(form).forEach(key => {
+      if (key !== 'image') {
+        formData.append(key, form[key]);
+      }
+    });
+  
+    // Добавляем изображение, если оно есть
+    if (form.image instanceof File) {
+      formData.append('image', form.image);
+    }
+  
     try {
-      const response = await fetch(
-        form._id ? `http://localhost:5000/api/dishes/${form._id}` : 'http://localhost:5000/api/dishes/add',
-        {
-          method: form._id ? 'PUT' : 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form)
-        }
-      );
-
+      const method = form._id ? 'PUT' : 'POST';
+      const url = form._id
+        ? `http://localhost:5000/api/dishes/${form._id}`
+        : 'http://localhost:5000/api/dishes/add';
+  
+      const response = await fetch(url, {
+        method,
+        body: formData
+      });
+  
       if (!response.ok) throw new Error('Не удалось сохранить блюдо');
-
+  
       alert(form._id ? 'Обновлено!' : 'Добавлено!');
+      setIsModalOpen(false);
+      setForm({ ...emptyDish });
+  
+      const updatedDishes = await fetch('http://localhost:5000/api/dishes').then(res => res.json());
+      setDishes(updatedDishes);
+    } catch (err) {
+      console.error('❌ Ошибка сохранения:', err.message);
+      alert('Ошибка при сохранении блюда');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Вы уверены, что хотите удалить это блюдо?')) return;
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/dishes/${form._id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) throw new Error('Не удалось удалить блюдо');
+
+      alert('Блюдо удалено');
       setIsModalOpen(false);
       setForm({ ...emptyDish });
 
       const updatedDishes = await fetch('http://localhost:5000/api/dishes').then(res => res.json());
       setDishes(updatedDishes);
     } catch (err) {
-      console.error('❌ Ошибка сохранения:', err.message);
-      alert('Ошибка при сохранении блюда');
+      console.error('❌ Ошибка удаления:', err.message);
+      alert('Ошибка при удалении блюда');
     }
   };
 
@@ -151,7 +201,7 @@ function AdminPanel() {
     <div className="admin-panel">
       <h2>Админ-панель</h2>
 
-      {/* Навигационные вкладки */}
+      {/* Вкладки */}
       <div className="admin-tabs">
         <button onClick={() => setActiveTab('menu')} className={activeTab === 'menu' ? 'active' : ''}>
           Меню
@@ -163,22 +213,29 @@ function AdminPanel() {
 
       {/* Вкладка: Меню */}
       {activeTab === 'menu' && (
-        <>
-          <div className="dishes-grid">
-            {filteredDishes.map(dish => (
-              <div key={dish._id} className="dish-card" onClick={() => startEdit(dish)}>
-                <img src={dish.image} alt={dish.name} />
-                <h3>{dish.name}</h3>
-                <p>{dish.price} ₽</p>
-              </div>
-            ))}
+        <div className="menu-section">
+          {/* Блюда */}
+<div className="dishes-grid">
+  {filteredDishes.map(dish => (
+    <div key={dish._id} className="dish-card" onClick={() => startEdit(dish)}>
+      <div className="dish-image-container">
+        <img
+          src={dish.image || 'https://via.placeholder.com/200x150?text=Нет+фото'}
+          alt={dish.name}
+          className="dish-image"
+        />
+      </div>
+      <h3>{dish.name}</h3>
+      <p>{dish.price} ₽</p>
+    </div>
+  ))}
 
-            <div className="dish-card empty" onClick={() => startEdit({ ...emptyDish })}>
-              <div className="plus">+</div>
-              <p>Добавить новое блюдо</p>
-            </div>
-          </div>
-        </>
+  <div className="dish-card empty" onClick={() => startEdit({ ...emptyDish })}>
+    <div className="plus">+</div>
+    <p>Добавить новое блюдо</p>
+  </div>
+</div>
+        </div>
       )}
 
       {/* Вкладка: Заказы */}
@@ -236,9 +293,7 @@ function AdminPanel() {
                     <td>
                       <select
                         value={order.status}
-                        onChange={(e) =>
-                          updateOrderStatus(order._id, e.target.value)
-                        }
+                        onChange={(e) => updateOrderStatus(order._id, e.target.value)}
                       >
                         <option value="новый">Новый</option>
                         <option value="в обработке">В обработке</option>
@@ -254,6 +309,85 @@ function AdminPanel() {
               )}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {/* Модальное окно */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={() => setIsModalOpen(false)}>×</button>
+
+            <h2>{form._id ? 'Редактировать блюдо' : 'Добавить новое блюдо'}</h2>
+
+            <div className="form-group">
+              <label>Изображение:</label>
+              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <div className="image-preview">
+                {form.image ? (
+                  <img src={form.image} alt="Предпросмотр" />
+                ) : (
+                  <div className="placeholder">Нет изображения</div>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>Название:</label>
+              <input name="name" value={form.name} onChange={handleChange} />
+            </div>
+
+            <div className="form-group">
+              <label>Цена:</label>
+              <input name="price" type="number" value={form.price} onChange={handleChange} />
+            </div>
+
+            <div className="form-group">
+              <label>Вес:</label>
+              <input name="weight" value={form.weight} onChange={handleChange} />
+            </div>
+
+            <div className="form-group">
+              <label>Описание:</label>
+              <textarea name="description" value={form.description} onChange={handleChange} />
+            </div>
+
+            <div className="form-group">
+              <label>Основная категория:</label>
+              <select name="mainCategory" value={form.mainCategory} onChange={handleMainCategoryChange}>
+                <option value="">-- Выберите категорию --</option>
+                {categoryTags.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Дополнительные теги:</label>
+              {availableTags[form.mainCategory]?.map(tag => (
+                <label key={tag} className="tag-checkbox">
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    checked={form.tags.includes(tag)}
+                    onChange={handleAdditionalTagChange}
+                  />
+                  {tag}
+                </label>
+              ))}
+            </div>
+
+            <div className="button-group">
+              {form._id && (
+                <button type="button" className="delete-button" onClick={handleDelete}>
+                  Удалить блюдо
+                </button>
+              )}
+              <button className="save-button" onClick={handleSave}>
+                {form._id ? 'Сохранить изменения' : 'Добавить блюдо'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

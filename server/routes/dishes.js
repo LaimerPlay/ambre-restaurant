@@ -1,5 +1,25 @@
 import express from 'express';
 import Dish from '../models/Dish.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Получаем __dirname в ESM модуле
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Настройка multer для загрузки изображений
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Папка для хранения изображений
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname)); // оригинальное расширение
+  }
+});
+
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
@@ -14,9 +34,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Добавить блюдо
-router.post('/add', express.json(), async (req, res) => {
-  const { name, price, weight, description, mainCategory, tags, image } = req.body;
+// Добавить новое блюдо
+router.post('/add', upload.single('image'), async (req, res) => {
+  const { name, price, weight, description, mainCategory, tags } = req.body;
 
   if (!name || !price || !mainCategory) {
     return res.status(400).json({ message: 'Имя, цена и категория обязательны' });
@@ -29,8 +49,8 @@ router.post('/add', express.json(), async (req, res) => {
       weight,
       description,
       mainCategory,
-      tags: Array.isArray(tags) ? tags : [],
-      image: image || ''
+      tags: Array.isArray(tags) ? JSON.parse(tags) : [],
+      image: req.file ? `/uploads/${req.file.filename}` : '', // путь к изображению
     });
 
     const savedDish = await newDish.save();
@@ -42,9 +62,13 @@ router.post('/add', express.json(), async (req, res) => {
 });
 
 // Обновить блюдо
-router.put('/:id', express.json(), async (req, res) => {
+router.put('/:id', upload.single('image'), async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
+
+  if (req.file) {
+    updateData.image = `/uploads/${req.file.filename}`;
+  }
 
   try {
     const updatedDish = await Dish.findByIdAndUpdate(id, updateData, {

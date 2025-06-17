@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 
 const OrderSchema = new mongoose.Schema({
   userId: {
-    type: String,
-    required: false // Можно оставить пустым, если пользователь не авторизован
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Теперь можно связать с моделью User
+    required: false
   },
   userName: {
     type: String,
@@ -24,14 +25,20 @@ const OrderSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: function () {
-      return this.deliveryType === 'delivery';
+    validate: {
+      validator: function (v) {
+        return this.deliveryType !== 'delivery' || !!v;
+      },
+      message: 'Адрес обязателен при доставке'
     }
   },
   pickupAddress: {
     type: String,
-    required: function () {
-      return this.deliveryType === 'pickup';
+    validate: {
+      validator: function (v) {
+        return this.deliveryType !== 'pickup' || !!v;
+      },
+      message: 'Адрес самовывоза обязателен при выборе самовывоза'
     }
   },
   paymentMethod: {

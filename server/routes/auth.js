@@ -5,11 +5,12 @@ import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
-// Регистрация
+// Регистрация пользователя
 router.post('/register', async (req, res) => {
   const { username, email, phone, password } = req.body;
 
   try {
+    // Проверка на существующего пользователя
     const existingUser = await User.findOne({
       $or: [
         { username },
@@ -22,21 +23,36 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ message: 'Логин, email или телефон уже заняты' });
     }
 
+    // Хэшируем пароль
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, email, phone, password: hashedPassword });
+
+    // Создаём нового пользователя
+    const newUser = new User({
+      username,
+      email,
+      phone,
+      password: hashedPassword
+    });
 
     await newUser.save();
 
-    res.status(201).json({ message: 'Пользователь зарегистрирован' });
+    // Генерируем токен
+    const token = jwt.sign(
+      { id: newUser._id, role: newUser.role },
+      process.env.JWT_SECRET || 'your_jwt_secret_key',
+      { expiresIn: '1d' }
+    );
+
+    res.status(201).json({ message: 'Пользователь зарегистрирован', user: { id: newUser._id, role: newUser.role }, token });
   } catch (err) {
     console.error('❌ Ошибка регистрации:', err.message);
-    res.status(500).json({ message: 'Ошибка при регистрации' });
+    res.status(500).json({ message: 'Ошибка регистрации' });
   }
 });
 
-// Вход
+// Вход пользователя
 router.post('/login', async (req, res) => {
-  const { login, password } = req.body; // login = username / email / phone
+  const { login, password } = req.body; // login — это username, email или phone
 
   try {
     const user = await User.findOne({
@@ -56,14 +72,14 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Неверный логин или пароль' });
     }
 
-    // Генерируем токен
+    // Генерация токена
     const token = jwt.sign(
-      { id: user._id, role: user.role, username: user.username },
-      'your_jwt_secret_key_here',
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET || 'your_jwt_secret_key',
       { expiresIn: '1d' }
     );
 
-    res.json({ token, user: { id: user._id, username: user.username, role: user.role } });
+    res.json({ token, user: { id: user._id, role: user.role, username: user.username } });
   } catch (err) {
     console.error('❌ Ошибка входа:', err.message);
     res.status(500).json({ message: 'Ошибка при входе' });

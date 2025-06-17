@@ -1,112 +1,155 @@
-.menu-page {
+.menu {
   padding: 40px 20px;
   background-color: #f9f9f9;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Georgia', serif;
 }
 
-/* === Заголовок === */
-.menu-page h1 {
+.menu-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+}
+
+.menu-header h1 {
+  color: #4a4a4a;
   font-size: 28px;
-  color: #333;
+  margin-bottom: 10px;
 }
 
-/* === Фильтр по тегам === */
-.category-section {
-  margin-bottom: 40px;
+.menu-header p {
+  color: #666;
+  font-style: italic;
 }
 
-.category-section h2 {
-  font-size: 20px;
-  color: var(--amber-color);
-  margin-bottom: 16px;
+/* Фильтры */
+.filter-section {
+  margin-bottom: 30px;
 }
 
-.tag-filter {
+.category-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.tag-button {
-  padding: 6px 12px;
-  font-size: 14px;
-  border: none;
+.category-buttons button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: #fff;
   border-radius: 20px;
-  background-color: #eee;
-  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.category-buttons button:hover {
+  background-color: #fff5f5;
+  border-color: #ff4d4d;
+}
+
+.category-buttons button.active {
+  background-color: #ff4d4d;
+  color: white;
+  border-color: #ff4d4d;
+}
+
+.tag-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag-buttons .tag {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background-color: #fff;
+  color: #4a4a4a;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.tag-button:hover {
-  background-color: #ddd;
+.tag-buttons .tag:hover {
+  background-color: #fff0f0;
 }
 
-.tag-button.active {
-  background-color: #ff9f43;
+.tag-buttons .tag.active {
+  background-color: #ff4d4d;
   color: white;
-  font-weight: bold;
+  border-color: #ff4d4d;
 }
 
-/* === Сетка блюд === */
+/* Сетка блюд */
 .dishes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
 }
 
-/* === Карточка блюда === */
+/* Карточка блюда */
 .dish-card {
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
+  overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 15px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   cursor: pointer;
 }
 
 .dish-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .dish-card img {
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 150px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 10px;
 }
 
-.dish-card h3 {
-  font-size: 18px;
-  margin: 0 0 10px 0;
+.dish-info {
+  padding: 15px;
+  padding-bottom: 20px; /* Отступ снизу */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.dish-card p {
+.dish-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #d4af37;
+  margin: 0 0 10px;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.price-weight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 14px;
-  margin: 0;
-  color: #555;
+  color: #777;
+}
+
+.weight {
+  color: #888;
 }
 
 .price {
-  margin-top: 10px;
+  color: #d4af37;
   font-weight: bold;
-  color: #333;
-  font-size: 20px; /* Увеличили цену */
+  font-size: 18px;
 }
 
-.no-results {
-  text-align: center;
-  font-style: italic;
-  color: #aaa;
-  margin-top: 20px;
-}
-
-/* === Модальное окно === */
+/* Модальное окно */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -115,136 +158,124 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 9999;
+  align-items: center;
+  z-index: 1000;
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 24px;
-  border-radius: 10px;
+  background: white;
   max-width: 500px;
-  width: 90%;
-  position: relative;
-  text-align: left;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  max-height: 90vh;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: #888;
-  cursor: pointer;
-  z-index: 10;
+.modal-body {
+  padding: 20px;
 }
 
-.modal-image {
+.modal-body img {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  max-height: 250px;
   object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 15px;
 }
 
-.modal-content h2 {
-  margin-top: 0;
+.modal-details h2.dish-name {
   font-size: 24px;
-  margin-bottom: 12px;
-  color: #222;
+  font-weight: bold;
+  color: #d4af37;
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
-.modal-description {
-  font-size: 15px;
-  color: #444;
-  margin-bottom: 16px;
+.modal-details .description {
+  margin: 10px 0 15px;
+  color: #555;
 }
 
-.modal-category-tags {
+.info-row {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 14px;
 }
 
-.modal-category {
-  font-size: 14px;
-  color: #ff9f43;
+.info-row strong {
+  color: #d4af37;
   font-weight: bold;
 }
 
-.modal-tags {
+.tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
+  margin-bottom: 15px;
 }
 
 .tag-chip {
-  background-color: #ff9f43;
-  color: white;
+  font-size: 12px;
   padding: 4px 8px;
-  border-radius: 20px;
-  font-size: 13px;
+  background-color: #f0f0f0;
+  color: #777;
+  border-radius: 4px;
 }
 
 .quantity-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .quantity-control label {
+  display: block;
+  margin-bottom: 5px;
   font-size: 14px;
-  color: #333;
+  color: #4a4a4a;
 }
 
 .quantity-control input {
   width: 60px;
-  padding: 4px 8px;
-  font-size: 14px;
+  padding: 5px 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-.modal-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
-
-.modal-price {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
-
-.modal-weight {
-  font-size: 13px;
-  color: #888;
+  border-radius: 4px;
 }
 
 .add-to-cart-btn {
-  background-color: #ff9f43;
+  background-color: #d4af37;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 20px;
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  width: 100%;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #e67c00;
+  background-color: #c39f2b;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

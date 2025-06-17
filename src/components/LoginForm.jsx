@@ -23,13 +23,14 @@ function LoginForm({ closeModal }) {
 
       const data = await response.json();
 
-      // Сохраняем токен в localStorage (или Context API)
       localStorage.setItem('token', data.token);
-
+      localStorage.setItem('userId', data.user.id);
+      localStorage.setItem('role', data.user.role);
       alert('Вы успешно вошли!');
-      window.location.href = '/'; // Перезагружаем страницу или редиректим
+      window.location.reload();
       closeModal();
     } catch (err) {
+      console.error('Ошибка входа:', err.message);
       setMessage(err.message);
     }
   };

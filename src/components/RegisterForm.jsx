@@ -21,12 +21,7 @@ function RegisterForm({ closeModal }) {
       const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username,
-          email,
-          phone,
-          password
-        })
+        body: JSON.stringify({ username, email, phone, password })
       });
 
       const data = await res.json();
@@ -36,8 +31,14 @@ function RegisterForm({ closeModal }) {
         return;
       }
 
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.user.id);
+      localStorage.setItem('role', data.user.role);
       setMessage('Регистрация успешна!');
-      closeModal();
+      setTimeout(() => {
+        closeModal();
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       console.error('❌ Ошибка регистрации:', err.message);
       setMessage('Произошла ошибка при регистрации');

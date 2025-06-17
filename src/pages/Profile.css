@@ -1,16 +1,43 @@
-.profile-page {
+.profile {
   padding: 40px 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  font-family: 'Georgia', serif;
+}
+
+.profile h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .profile-card {
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: 0 auto 20px;
 }
 
 .profile-card p {
-  margin-bottom: 16px;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #4a4a4a;
+}
+
+.profile-card strong {
+  color: #d4af37;
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e63c3c;
 }

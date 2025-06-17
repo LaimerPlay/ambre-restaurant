@@ -5,13 +5,10 @@ const DishSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   weight: { type: String },
   description: { type: String },
-  image: { type: String },
-  mainCategory: {
-    type: String,
-    required: true,
-    enum: ['Завтраки', 'Основные блюда', 'Десерты', 'Напитки', 'Особенности'],
-  },
-  tags: { type: [String], default: [] },
+  mainCategory: { type: String, required: true },
+  tags: [{ type: String }],
+  image: { type: String }, // можно оставить как есть, если сохраняешь путь
+  createdAt: { type: Date, default: Date.now }
 });
 
 export default mongoose.model('Dish', DishSchema);
